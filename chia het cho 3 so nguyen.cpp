@@ -1,25 +1,46 @@
 #include<iostream>
-#include<cmath>
 using namespace std;
-long long uc(long long x,long long y){
-	int n=x,m=y;
-	while(y!=0){
-		int a=x%y;
-		x=y;
-		y=a;
-	} return (n*m)/x;
-} 
+
+long long x,y,z,n;
+void input()
+{
+    cin>>x>>y>>z>>n;
+}
+long long gcd(long long a,long long b){
+    while(a!=b){
+        if(a>b) a-=b;
+        else b-=a;
+    }
+    return a;
+}
+long long lcm(long long a,long long b){
+    return (a/gcd(a,b))*b;
+}
+void solve(){
+    long long zz=lcm(x,lcm(y,z));
+    long long ans=1;
+    if(n==1){
+        cout<<"-1\n";
+        return;
+    }
+    if(n==0){
+        
+        cout<<"-1\n";
+        return;
+    }
+    n--;
+    while(n--)ans*=10;
+    long long maxans=ans*10;
+    ans=(ans+(zz-ans%zz)%zz);
+    if(ans<maxans)cout<<ans<<'\n';
+    else cout<<"-1\n";
+}
+
 int main(){
-	int t,x,y,z,n;
-	long long h,k;
-	cin >> t;
-	while(t--){
-		cin >> x >> y >> z >> n;
-		k=uc(x,y);
-		h=uc(k,z);
-		long long b=(pow(10,n-1))/h;
-		long long c=(b+1)*h;
-		if(c>pow(10,n-1) && c<pow(10,n))	cout << c << endl;
-		else cout <<"-1" << endl;
-	}	
+    int t;
+    cin>>t;
+    while(t--){
+        input();
+        solve();
+    }
 }
